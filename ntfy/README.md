@@ -3,7 +3,7 @@
 <<https://github.com/binwiederhier/ntfy>
 <<https://ntfy.sh/docs>
 
-# uses and such
+uses and such
 
 fun use: get notification when someone logs in via ssh
 
