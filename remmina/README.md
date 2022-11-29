@@ -1,1 +1,3 @@
-from https://hub.docker.com/r/linuxserver/remmina
+# Remming Docker compose setup 
+
+from <https://hub.docker.com/r/linuxserver/remmina>
