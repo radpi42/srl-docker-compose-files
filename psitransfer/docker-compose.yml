@@ -6,5 +6,5 @@ services:
         environment:
             - PSITRANSFER_ADMIN_PASS=secret #change secret to your own passwd
         volumes:
-            - '$PWD/data:/data'
+            - '$HOME/slr-docker-compose-files/psitransfer/data:/data'
         image: psitrax/psitransfer
