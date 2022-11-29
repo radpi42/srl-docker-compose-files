@@ -1,0 +1,15 @@
+---
+version: "2.1"
+services:
+  remmina:
+    image: lscr.io/linuxserver/remmina:latest
+    container_name: remmina
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Los_Angeles
+    volumes:
+      - $HOME/slr-docker-compose-files/remmina/config:/config
+    ports:
+      - 3000:3000
+    restart: unless-stopped
