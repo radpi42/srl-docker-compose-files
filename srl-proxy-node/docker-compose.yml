@@ -22,7 +22,7 @@ services:
       - ./data:/data
       - ./letsencrypt:/etc/letsencrypt
     depends_on:
-      - db
+      - nginx-proxy-manager-db
   nginx-proxy-manager-db:
     image: 'jc21/mariadb-aria:latest'
     restart: unless-stopped
