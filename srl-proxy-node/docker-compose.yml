@@ -69,5 +69,5 @@ volumes:
     driver: local
 networks:
   default:
-    external: true
+    external: false
     name: srl-proxy
