@@ -100,6 +100,29 @@ services:
          max-size: 1g
     labels:
       - "com.centurylinklabs.watchtower.enable=true" 
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus
+    restart: unless-stopped
+    volumes:
+      - ./prometheus/:/etc/prometheus/
+      - prometheus:/prometheus/
+    ports:
+      - 9090:9090
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+  grafana:
+    container_name: grafana
+    image: grafana/grafana
+    ports:
+      - 3000:3000
+    environment:
+      GF_INSTALL_PLUGINS: grafana-clock-panel,grafana-simple-json-datasource
+    volumes:
+      - grafana:/var/lib/grafana
+      - ./grafana:/etc/grafana/provisioning
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true" 
 volumes:
   portainer-data:
     driver: local
