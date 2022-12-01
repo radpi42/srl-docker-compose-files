@@ -1,6 +1,6 @@
 version: "3"
 services:
-  app:
+  nginx-proxy-manager:
     image: 'jc21/nginx-proxy-manager:latest'
     restart: unless-stopped
     ports:
@@ -23,7 +23,7 @@ services:
       - ./letsencrypt:/etc/letsencrypt
     depends_on:
       - db
-  db:
+  nginx-proxy-manager-db:
     image: 'jc21/mariadb-aria:latest'
     restart: unless-stopped
     environment:
@@ -33,6 +33,17 @@ services:
       MYSQL_PASSWORD: 'npm'
     volumes:
       - ./data/mysql:/var/lib/mysql
+
+  portainer:
+    container_name: portainer
+    image: 'portainer/portainer-ce:latest'
+    ports:
+      - '9000:9000'
+      - '9443:9443'
+      - '8000:8000'
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer-data:/data
   
   uptime-kuma:
     image: louislam/uptime-kuma:base-alpine
