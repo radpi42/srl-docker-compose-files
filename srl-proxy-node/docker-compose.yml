@@ -2,7 +2,7 @@ version: "3"
 services:
   nginx-proxy-manager:
     image: 'jc21/nginx-proxy-manager:latest'
-    restart: unless-stopped
+    restart: always
     ports:
       # These ports are in format <host-port>:<container-port>
       - '80:80' # Public HTTP Port
@@ -25,7 +25,7 @@ services:
       - db
   db:
     image: 'jc21/mariadb-aria:latest'
-    restart: unless-stopped
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: 'npm'
       MYSQL_DATABASE: 'npm'
@@ -43,10 +43,11 @@ services:
           - 2375:2375
       volumes:
           - /var/run/docker.sock:/var/run/docker.sock:ro # Mounted as read-only
-      restart: unless-stopped
+      restart: always
   portainer:
     container_name: portainer
     image: 'portainer/portainer-ce:latest'
+    restart: always
     ports:
       - '9000:9000'
       - '9443:9443'
@@ -61,7 +62,7 @@ services:
       - ./uptime-kuma-data:/app/data
     ports:
       - 3001:3001  # <Host Port>:<Container Port>
-    restart: always
+    restart: unless-stopped
 
 volumes:
   portainer-data:
