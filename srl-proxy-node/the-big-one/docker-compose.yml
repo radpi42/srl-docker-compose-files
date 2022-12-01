@@ -23,6 +23,8 @@ services:
       - ./letsencrypt:/etc/letsencrypt
     depends_on:
       - db
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
   db:
     image: 'jc21/mariadb-aria:latest'
     restart: always
@@ -33,9 +35,12 @@ services:
       MYSQL_PASSWORD: 'npm'
     volumes:
       - ./data/mysql:/var/lib/mysql
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
   dockersocketproxy:
       image: ghcr.io/tecnativa/docker-socket-proxy:latest
       container_name: dockersocketproxy
+      restart: always
       environment:
           - CONTAINERS=1 # Allow access to viewing containers
           - POST=0 # Disallow any POST operations (effectively read-only)
@@ -43,7 +48,8 @@ services:
           - 2375:2375
       volumes:
           - /var/run/docker.sock:/var/run/docker.sock:ro # Mounted as read-only
-      restart: always
+      labels:
+      - "com.centurylinklabs.watchtower.enable=true"
   portainer:
     container_name: portainer
     image: 'portainer/portainer-ce:latest'
@@ -55,20 +61,24 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer-data:/data
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
   uptime-kuma:
     image: louislam/uptime-kuma:1
     container_name: uptime-kuma
+    restart: unless-stopped
     volumes:
       - ./uptime-kuma-data:/app/data
     ports:
       - 3001:3001  # <Host Port>:<Container Port>
-    restart: unless-stopped
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
   watchtowerr:
     container_name: watchtower
     image: containrrr/watchtower
     restart: unless-stopped
     ports:
-      - '82:80'
+      - '8080:8080'
     volumes:
       - '/var/run/docker.sock:/tmp/docker.sock:ro'
       - '/var/run/docker.sock:/var/run/docker.sock'
@@ -93,7 +103,9 @@ services:
 volumes:
   portainer-data:
     driver: local
+  prometheus: {}
+  grafana: {}
 networks:
   default:
-    external: true
+    external: false
     name: srl-proxy
