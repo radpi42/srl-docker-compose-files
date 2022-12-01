@@ -23,7 +23,6 @@ services:
       - ./letsencrypt:/etc/letsencrypt
     depends_on:
       - db
-
   db:
     image: 'jc21/mariadb-aria:latest'
     restart: unless-stopped
@@ -43,12 +42,7 @@ services:
     ports:
       - 3001:3001  # <Host Port>:<Container Port>
     restart: always
-  
-  healthcheck:
-    test: ["CMD", "/bin/check-health"]
-    interval: 10s
-    timeout: 3s
-    
+     
 networks:
   default:
     external: true
