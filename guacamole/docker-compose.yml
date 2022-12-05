@@ -6,7 +6,7 @@ services:
     image: oznu/guacamole
     container_name: guacamole
     volumes:
-      - /home/radpivm/guac/config:/config
+      - ./config:/config
     ports:
       - 8080:8080
     restart: unless-stopped
